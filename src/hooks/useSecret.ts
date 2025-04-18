@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { PLACEHOLDERS } from "../consts/Placeholder";
 import getErrorMessage from "../helpers/getErrorMessage";
+import useSecretContext from "./useSecretContext";
 
 export default function useSecret() {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [secret, setSecret] = useState("");
-  const [secrets, setSecrets] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const { addSecret } = useSecretContext();
 
   useEffect(() => {
     const interval = setInterval(
@@ -25,11 +27,9 @@ export default function useSecret() {
       return;
     }
 
-    setSecrets((prev) => [...prev, secret]);
-
     setSecret("");
 
-    localStorage.setItem("secrets", JSON.stringify([...secrets, secret]));
+    addSecret(secret);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -40,7 +40,6 @@ export default function useSecret() {
   return {
     placeholderIndex,
     secret,
-    secrets,
     error,
     handleSubmit,
     handleChange,
