@@ -8,7 +8,7 @@ const SecretForm = () => {
 
   return (
     <div className="flex flex-col gap-5 items-center w-full">
-      <h1 className="text-white text-xl font-bold">Your secret vault</h1>
+      <h1 className="text-white text-xl font-bold">Type your secret</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center w-full gap-5"
